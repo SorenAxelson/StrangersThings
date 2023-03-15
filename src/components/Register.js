@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 const BASE_URL = `https://strangers-things.herokuapp.com/api/2211-FTB-ET-WEB-FT`;
 const Register = () => {
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   // username is set to an empty string, setUsername is set to a
   // function which updates the string
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
   const registerUser = async () => {
     try {
       const response = await fetch(`${BASE_URL}/users/register`, {
@@ -25,7 +25,8 @@ const Register = () => {
       // You can log ▲▲▲ the result
       // here ▼▼▼ to view the json object before returning it
       console.log(result);
-      navigate("/#");
+      navigate("./#");
+      return result;
     } catch (err) {
       console.error(err);
     }

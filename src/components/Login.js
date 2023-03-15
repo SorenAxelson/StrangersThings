@@ -1,13 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 const BASE_URL = `https://strangers-things.herokuapp.com/api/2211-FTB-ET-WEB-FT`;
 const Login = () => {
-  const [username, checkUsername] = useState("");
-  const [password, checkPassword] = useState("");
   const navigate = useNavigate();
-  const registerUser = async () => {
+  const [username, enterUsername] = useState("");
+  const [password, enterPassword] = useState("");
+  const loginUser = async () => {
     try {
-      const response = await fetch(`${BASE_URL}/users/register`, {
+      const response = await fetch(`${BASE_URL}/users/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -20,28 +20,27 @@ const Login = () => {
         }),
       });
       const result = await response.json();
-      // You can log ▲▲▲ the result
-      // here ▼▼▼ to view the json object before returning it
       console.log(result);
-      navigate("/");
+      navigate("./#");
+      return result;
     } catch (err) {
       console.error(err);
     }
   };
   return (
     <div>
-      <form onSubmit={registerUser}>
-        <label>Username</label>
+      <form onSubmit={loginUser}>
+        <label>Enter Username</label>
         <input
           value={username}
           type="text"
-          onChange={(event) => checkUsername(event.target.value)}
+          onChange={(event) => enterUsername(event.target.value)}
         ></input>
-        <label>Password</label>
+        <label>Enter Password</label>
         <input
           value={password}
           type="text"
-          onChange={(event) => checkPassword(event.target.value)}
+          onChange={(event) => enterPassword(event.target.value)}
         ></input>
         <button type="submit">Submit</button>
       </form>
