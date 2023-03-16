@@ -21,6 +21,7 @@ const App = () => {
       <Link to="/register">Register Now</Link>
       <Link to="/login">Log In</Link>
       <Link to="/profile">Your Profile</Link>
+      <Link to="/#">Home</Link>
 
       <AllPosts posts={posts} setPosts={setPosts} />
     </div>
