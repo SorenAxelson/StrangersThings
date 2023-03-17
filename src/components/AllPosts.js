@@ -1,13 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+
 const BASE_URL = `https://strangers-things.herokuapp.com/api/2211-FTB-ET-WEB-FT`;
-const AllPosts = ({ setPosts, posts }) => {
+
+const AllPosts = () => {
+  const [posts, setPosts] = useState([]);
   const fetchPosts = async () => {
     try {
       const response = await fetch(`${BASE_URL}/posts`);
-
       const result = await response.json();
       console.log(result);
       setPosts(result.data.posts);
+      return result;
     } catch (err) {
       console.error(err);
     }
@@ -17,10 +20,10 @@ const AllPosts = ({ setPosts, posts }) => {
   }, []);
   console.log(posts);
   return (
-    <div>
+    <div id="allPosts">
       {posts.map((post) => {
         return (
-          <div key={post._id}>
+          <div className="post" key={post._id}>
             <h1>{post.title}</h1>
             <strong>{post.price}</strong>
             <p>{post.author.username}</p>

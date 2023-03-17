@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 const BASE_URL = `https://strangers-things.herokuapp.com/api/2211-FTB-ET-WEB-FT`;
+const loginToken = {
+  token: "",
+};
+
 const Login = () => {
   const navigate = useNavigate();
   const [username, enterUsername] = useState("");
@@ -21,6 +26,8 @@ const Login = () => {
       });
       const result = await response.json();
       console.log(result);
+      // loginToken.token = result.data.token;
+      // console.log(loginToken.token);
       navigate("./#");
       return result;
     } catch (err) {
@@ -28,15 +35,15 @@ const Login = () => {
     }
   };
   return (
-    <div>
+    <div id="loginForm">
       <form onSubmit={loginUser}>
-        <label>Enter Username</label>
+        <label className="label">Enter Username</label>
         <input
           value={username}
           type="text"
           onChange={(event) => enterUsername(event.target.value)}
         ></input>
-        <label>Enter Password</label>
+        <label className="label">Enter Password</label>
         <input
           value={password}
           type="text"
@@ -47,4 +54,5 @@ const Login = () => {
     </div>
   );
 };
-export default Login;
+// console.log(loginToken.token);
+export { Login as default, loginToken };
