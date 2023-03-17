@@ -25,11 +25,6 @@ const Register = () => {
         }),
       });
       const result = await response.json();
-      // You can log ▲▲▲ the result
-      // here ▼▼▼ to view the json object before returning it
-      console.log(result);
-      // registerToken.token = result.data.token;
-      // console.log(registerToken.token);
       navigate("./#");
       return result;
     } catch (err) {
@@ -40,13 +35,13 @@ const Register = () => {
   return (
     <div id="registerForm">
       <form onSubmit={registerUser}>
-        <label class="label">Register new Username</label>
+        <label className="label">Register new Username</label>
         <input
           value={username}
           type="text"
           onChange={(event) => setUsername(event.target.value)}
         ></input>
-        <label class="label">Register new Password</label>
+        <label className="label">Register new Password</label>
         <input
           value={password}
           type="text"
@@ -57,5 +52,4 @@ const Register = () => {
     </div>
   );
 };
-// console.log(registerToken.token);
 export { Register as default, registerToken };

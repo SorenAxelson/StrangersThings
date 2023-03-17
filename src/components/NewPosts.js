@@ -1,13 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import context from "./context";
-
-console.log(context.token);
-const TOKEN_STRING_HERE = context.token;
-console.log(TOKEN_STRING_HERE);
 const BASE_URL = `https://strangers-things.herokuapp.com/api/2211-FTB-ET-WEB-FT`;
 
-const NewPosts = () => {
+const NewPosts = ({ token }) => {
   const navigate = useNavigate();
   const [title, enterTitle] = useState("");
   const [price, enterPrice] = useState("");
@@ -15,7 +10,6 @@ const NewPosts = () => {
   const [delivery, enterDelivery] = useState("");
   let deliveryBoolean = false;
   const makePost = async () => {
-    console.log("i exist");
     if (delivery === "y" || delivery === "Y") {
       deliveryBoolean = true;
     } else {
@@ -26,7 +20,7 @@ const NewPosts = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${TOKEN_STRING_HERE}`,
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           post: {
@@ -38,7 +32,6 @@ const NewPosts = () => {
         }),
       });
       const result = await response.json();
-      console.log(result);
       navigate("./#");
       return result;
     } catch (err) {

@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 const BASE_URL = `https://strangers-things.herokuapp.com/api/2211-FTB-ET-WEB-FT`;
-const loginToken = {
-  token: "",
-};
 
-const Login = () => {
+const Login = ({ username, setUsername, setToken, setLoggedIn }) => {
   const navigate = useNavigate();
-  const [username, enterUsername] = useState("");
-  const [password, enterPassword] = useState("");
+
+  const [password, setPassword] = useState("");
   const loginUser = async () => {
     try {
       const response = await fetch(`${BASE_URL}/users/login`, {
@@ -24,11 +20,14 @@ const Login = () => {
           },
         }),
       });
+
       const result = await response.json();
-      console.log(result);
-      // loginToken.token = result.data.token;
-      // console.log(loginToken.token);
-      navigate("./#");
+      if (result.success === true) {
+        setLoggedIn(true);
+        setToken(result.data.token);
+        window.localStorage.setItem("token", result.data.token);
+        navigate("./#");
+      }
       return result;
     } catch (err) {
       console.error(err);
@@ -41,18 +40,17 @@ const Login = () => {
         <input
           value={username}
           type="text"
-          onChange={(event) => enterUsername(event.target.value)}
+          onChange={(event) => setUsername(event.target.value)}
         ></input>
         <label className="label">Enter Password</label>
         <input
           value={password}
           type="text"
-          onChange={(event) => enterPassword(event.target.value)}
+          onChange={(event) => setPassword(event.target.value)}
         ></input>
         <button type="submit">Submit</button>
       </form>
     </div>
   );
 };
-// console.log(loginToken.token);
-export { Login as default, loginToken };
+export default Login;
